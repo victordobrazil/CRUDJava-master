@@ -4,6 +4,8 @@
  */
 package Janelas;
 
+import BD.Conexao;
+
 /**
  *
  * @author andrey.munhoz
@@ -15,6 +17,7 @@ public class CadastroProduto extends javax.swing.JFrame {
      */
     public CadastroProduto() {
         initComponents();
+        
     }
 
     /**
