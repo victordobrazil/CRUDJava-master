@@ -60,7 +60,7 @@ public class ProdutoTableModel extends AbstractTableModel{
         return dados.get (linha);
     }
     
-    private void lerDados(){
+    public void lerDados(){
         ProdutoDAO pdao = new ProdutoDAO();
         for (Produto p : pdao.read()) {
             this.addLinha(p);
@@ -68,9 +68,12 @@ public class ProdutoTableModel extends AbstractTableModel{
         }
         this.fireTableDataChanged();
     }
-    
-    public CadastroProduto() {
-       initComponets
+    public void RecarregaTabela(){
+        this.dados.clear();
+        lerDados();
+        this.fireTableDataChanged();
+    }
+   
     }
     
-    }
+    

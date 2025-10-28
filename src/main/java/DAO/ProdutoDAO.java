@@ -51,4 +51,23 @@ public class ProdutoDAO {
                 }
                 return produtos;
     }
+    public void create(Produto p){
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        try {
+            stmt = con.prepareStatement("INSERT INTO tbl_produto(descricao, valor, quantidade) VALUES (?,?,?)");
+            stmt.setString(1, p.getDescricao());  
+             stmt.setDouble(2, p.getValor());
+            stmt.setDouble(3, p.getQuantidade());
+            
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Falha ao cadastrar: " + e);
+        }finally {
+            Conexao.closeConnection(con, stmt);
+        }
+        
+    }
 }
