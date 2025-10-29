@@ -207,7 +207,10 @@ public class CadastroProduto extends javax.swing.JFrame {
 
     private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
         if (jTProdutos.getSelectedRow() != -1);
-        modelo.removeLinha(jTProdutos.getSelectedRow());
+        Produto p = modelo.pegaDadosLinha(jTProdutos.getSelectedRow());
+        ProdutoDAO dao = new ProdutoDAO();
+        dao.delete(p);
+        modelo.RecarregaTabela();
     }//GEN-LAST:event_jBExcluirActionPerformed
 
     private void jTProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTProdutosMouseClicked
