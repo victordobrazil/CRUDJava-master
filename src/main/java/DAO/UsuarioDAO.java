@@ -5,6 +5,7 @@
 package DAO;
 
 import BD.Conexao;
+import Model.UsuarioTableModel;
 import Obejtos.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,11 +53,11 @@ public class UsuarioDAO {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("INSERT INTO tbl_usuarios(descricao, valor, quantidade) VALUES (?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO tbl_usuarios(nome, login, senha, tipo) VALUES (?,?,?,?)");
             stmt.setString(1, u.getNome());  
-            stmt.setString(3, u.getLogin());
-            stmt.setString(4, u.getSenha());
-            stmt.setString(5, u.getTipo());
+            stmt.setString(2, u.getLogin());
+            stmt.setString(3, u.getSenhaHash());
+            stmt.setString(4, u.getTipo());
             
             stmt.execute();
             JOptionPane.showMessageDialog(null, "Usuario cadastrado com sucesso!");
@@ -109,4 +110,39 @@ public class UsuarioDAO {
         }
         
     }
+       
+  public Usuario verificaUsuario(String login){
+      Connection con = Conexao.getConnection();
+      PreparedStatement stmt = null;
+      ResultSet rs = null;
+      Usuario u = new Usuario();
+      
+      try {
+                    stmt = con.prepareStatement("SELECT * FROM tbl_usuarios WHERE login = ?");
+                    stmt.setString(1, login);
+                    rs = stmt.executeQuery();
+                    
+                    while(rs.next()){
+                        Usuario p = new Usuario();
+                        p.setId(rs.getInt("id"));
+                        p.setNome(rs.getString("nome"));
+                        p.setLogin(rs.getString("login"));
+                        p.setSenha(rs.getString("senha"));
+                        p.setTipo(rs.getString("tipo"));                   
+                    }
+                    return u;
+                    
+                }catch (SQLException e){
+                    
+                    JOptionPane.showMessageDialog(null, "falha ao obter os dados" + e);
+                    
+                }finally {
+                    Conexao.closeConnection(con, stmt, rs);
+                }
+      
+      return null;
+                
+      
+  }
+       
 }
